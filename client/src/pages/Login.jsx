@@ -1,17 +1,21 @@
-import React from 'react'
+import {useState} from 'react'
 export default function Login() {
+
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+  });
 
   const loginUser = (e) => {
     e.preventDefault();
-    console.log('logging in user...');
   }
   return (
     <div className='login'>
      <form onSubmit={loginUser}>
-       <label htmlFor="">Email</label>
-      <input type="email" placeholder='enter email...'/>
-      <label htmlFor="">Password</label>
-      <input type="password" placeholder='enter password...'/>
+       <label >Email</label>
+      <input type="email" placeholder='enter email...' value={data.email} onChange={(e) => setData({...data, email: e.target.value})}/>
+      <label>Password</label>
+      <input type="password" placeholder='enter password...' value={data.password} onChange={(e) => setData({...data, password: e.target.value})}/>
       <button type='submit'>
         Login
       </button>

@@ -9,17 +9,17 @@ export default function Register() {
 
   const registerUser = (e) => {
     e.preventDefault();
-    console.log('registering user...');
+   console.log(data);
   }
 
   return (
     <div className='register'>
      <form onSubmit={registerUser}>
-      <label htmlFor="">Name</label>
+      <label >Name</label>
       <input type="text" placeholder='enter name...' value={data.name} onChange={(e) => setData({...data, name: e.target.value})}/>
-      <label htmlFor="">Email</label>
+      <label >Email</label>
       <input type="email" placeholder='enter email...' value={data.email} onChange={(e) => setData({...data, email: e.target.value})}/>
-      <label htmlFor="">Password</label>
+      <label >Password</label>
       <input type="password" placeholder='enter password...' value={data.password} onChange={(e) => setData({...data, password: e.target.value})}/>
       <button type='submit'>Register</button>
      </form>

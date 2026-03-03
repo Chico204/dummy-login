@@ -4,7 +4,7 @@ const { hashPassword, comparePassword } = require('../helpers/auth');
 const test = (req, res) => {
   res.json({ message: "Hello world!" });
 };
-
+//register endpoint
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -25,11 +25,12 @@ const registerUser = async (req, res) => {
       return res.json({ error: "Email already exists!" });
     }
 
+    const hashedPassword = await hashPassword(password);
     // Create user
     const user = await User.create({
       name,
       email,
-      password,
+      password: hashedPassword,
     });
 
     return res.json(user);
@@ -39,8 +40,27 @@ const registerUser = async (req, res) => {
 
   }
 };
+//login endpoint
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.json({ error: "User not found!" });
+
+    const match = await comparePassword(password, user.password);
+    if (!match) return res.json({ error: "Incorrect password!" });
+
+    // Success
+    return res.json({ message: "Login successful!", user }); 
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
+};
 
 module.exports = {
   test,
   registerUser,
+  loginUser
 };

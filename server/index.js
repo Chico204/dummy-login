@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -12,6 +13,8 @@ mongoose.connect(process.env.MONGO_URL)
 
 // middleware
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 // CORS - configure globally for all routes
 app.use(cors({
